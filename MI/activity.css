@@ -1,0 +1,50 @@
+.header{
+    height: 779px;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+.header .bg {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2560px;
+    margin-left: -1280px;
+    z-index: -1;
+}
+.bg-ele{
+    height: 779px;
+}
+.bg-ele .index-lk{
+    float: right;
+    color: #fff;
+    margin-left: 10px;
+    padding-top: 20px;
+}
+.header .act-logo{
+    float: left;
+    width: 40px;
+    height: 40px;
+}
+.container{
+    width: 1226px;
+    margin: 0 auto;
+}
+.promo{
+    width: 100%;
+    overflow: hidden;
+}
+.promo .act1{
+    display: block;
+    width: 2560px;
+    height: 130px;
+    position: relative;
+    left: 50%;
+    margin-left: -1280px;
+    overflow: hidden;
+}
+.promo .act1 img{
+    width: 2560px;
+    height: 100%;
+}
+

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>豆瓣TOP250</title>
+	<link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+	<h1>豆瓣电影 Top 250</h1>
+	<ul class="clearfix">
+		<% for(var i = 0; i < list.length; i ++){ %>
+			<li class="list">
+				<!-- <%= list[i].title %> -->
+				
+				<img src="<%= list[i].images.small %>" alt="">
+				<div class="con">
+					<p class="tit"><a href="javascript:void(0);"><%= list[i].title %></a></p>
+					<!-- <p class="dir"><%= getName(list[i].directors) %></p> -->
+					<p class="des"><%= list[i].year %></p>
+					<p class="rate"><%= list[i].rating.average %></p>
+					<p class="word">希望让人自由</p>
+				</div>
+				
+			</li>
+		<% } %>
+
+	</ul>
+	<!-- <% function getName(arr){ %>
+		<% var resArr = ""; %>
+		<% for(var i = 0 ; i < arr.length; i ++){ %>
+			<% resArr += " " + arr[i].name; %>
+			<% } %>
+			<% return res; %>
+			<% } %> -->
+	
+	<button id="btn">下一页</button>
+	<script src="/javascripts/douban.js"></script>
+</body>
+</html>

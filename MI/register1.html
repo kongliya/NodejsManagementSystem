@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>注册小米账号</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/register.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="wrap">
+            <div class="layout">
+                <div class="con">
+                    <div class="header">
+                        <div class="external_logo_area"><a class="milogo" href="javascript:void(0)"></a></div>
+                        <div class="title-item t_c">
+                            <h4 class="title_big30">注册小米帐号</h4>          
+                        </div>
+                    </div>
+                    <div class="regbox">
+                        <p class="country" style="margin-bottom:10px;font-size:16px;">设置密码：</p>
+                        <div class="listwrap">
+                            <div class="listtit" id="reg-phone-select-cty">
+                               
+                                <div class="inputbg" style="margin-top : 40px;">
+                                    <input id="pwd" value="123456"  style="width: 312px;left: 0;" type="password" name="password" placeholder="请输入密码">
+                                </div>
+                                <div class="inputbg" style="margin-top : 40px;">
+                                    <input value="123456" style="width: 312px;left: 0;" id="pwdConfirm" type="password" name="password" placeholder="再次输入密码">
+                                </div>
+                            </div>
+                        </div>
+                        <span class="error" style="right:0;top:-10px;"></span>
+                        <div class="reg-btn">
+                            <a id="regBtn" href="javascript:void(0);" class="btn332 btn_reg_1">设置密码</a>
+                        </div>
+                    </div>
+                    <div class="privacy_box">
+                        <div class="msg">
+                            <label class="n_checked now select-privacy">
+                            注册帐号即表示您同意并愿意遵守小米 <a href="javascript:void(0);" class="inspect_link agreement_link" title="用户协议" target="_blank">用户协议</a>和<a href="javascript:void(0);" class="inspect_link privacy_link" title=" 隐私政策 " target="_blank"> 隐私政策 </a>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 脚部 -->
+            <div class="n-footer">
+                <div class="nf-link-area clearfix">
+                    <ul class="lang-select-list">
+                    <li><a href="javascript:void(0);" class="lang-select-li current">简体</a>|</li>
+                    <li><a href="javascript:void(0);" class="lang-select-li">繁体</a>|</li>
+                    <li><a href="javascript:void(0);" class="lang-select-li">English</a>|</li>
+                    <li><a href="javascript:void(0);" target="_blank">常见问题</a>|</li>
+                    <li><a href="javascript:void(0);" target="_blank">隐私政策</a></li>
+                    </ul>
+                </div>
+                <p class="nf-intro">小米公司版权所有-京ICP备10046444-<a class="beian-record-link" target="_blank" href="javascript:void(0);"><span>
+                    <img src="https://account.xiaomi.com/static/res/9204d06/account-static/respassport/acc-2014/img/ghs.png"></span>京公网安备11010802020134号</a>-京ICP证110507号
+                </p>
+            </div>
+        </div>
+    </div>
+    <script src="script/jquery-3.3.1.js"></script>
+    <script src="script/jquery.cookie.js"></script>
+    <script>
+        var oPwd = $("#pwd");
+        var oConfirmPwd = $("#pwdConfirm");
+        var oError = $(".error");
+        var oRegBtn = $("#regBtn");
+
+        oPwd.onfocus = function(){
+            oError.innerHTML = "为了您的安全，请设置较复杂的密码";
+            oError.style.color = "#ff6700";
+        }
+        oPwd.onblur = function(){
+            if(oPwd.value.length < 6){
+                oError.innerHTML = "请输入至少六位密码";
+                oError.style.color = "#ff6700";
+            }
+        }
+           
+        oConfirmPwd.onblur = function(){
+            if(oPwd.value == oConfirmPwd.value){
+                var rate = 0;
+                var regPwd1 = /\d/;
+                if(regPwd1.test(oPwd.value)){
+                    rate ++;
+                }
+                var regPwd2 = /[a-zA-Z]/;
+                if(regPwd2.test(oPwd.value)){
+                    rate ++;
+                }
+                var regPwd3 = /\!\@\#\$\%\^\&\*\(\)\_/;
+                if(regPwd3.test(oPwd.value)){
+                    rate ++;
+                }
+                switch(rate){
+                    case 1 : 
+                            oPwd.style.borderColor = "red";  
+                            oError.innerHTML = "密码风险较高，建议重新设置";   
+                            break;
+                    case 2 : 
+                            oPwd.style.borderColor = "#ff6700";     
+                            oError.innerHTML = "密码较安全，如果再加入特殊符号就好啦~"; 
+                            break;
+                    case 3 : 
+                            oPwd.style.borderColor = "green";     
+                            break;
+                            oError.innerHTML = "bingo ! ! !"; 
+                }
+            }else{
+                oError.innerHTML = "两次密码输入不一致，请检查密码并重新输入";
+                oPwd.value = "";
+                oConfirmPwd.value = "";
+            }
+        }
+
+        oRegBtn.on("click",register);
+        function register(){
+            if(oPwd.val() == oConfirmPwd.val()){
+                $.ajax({
+                    type: 'POST',
+                    url : "http://localhost:88/api/users/register1",
+                    data : {
+                        username : $.cookie("phone"),
+                        password : oPwd.val()
+                    }
+                })
+                .then(function(res){
+                    oError.innerHTML = res;
+                    if(res == "注册成功"){
+                        location.href = "register2.html";
+                    }
+                })
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>注册小米账号</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/register.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="wrap">
+            <div class="layout">
+                <div class="con">
+                    <div class="header">
+                        <div class="external_logo_area"><a class="milogo" href="javascript:void(0)"></a></div>
+                        <div class="title-item t_c">
+                            <h4 class="title_big30">注册小米帐号</h4>          
+                        </div>
+                    </div>
+                    <div class="regbox">
+                        <p class="country">国家 / 地区</p>
+                        <p>
+                            <select name="" id="">
+                                <option value="">中国</option>
+                            </select>
+                            <p class="phone">成功注册帐号后，国家/地区将不能被修改</p>
+                        </p>
+                        <p class="country">手机号码</p>
+                       
+                        <div class="listwrap" id="select-cycode" _region="CN" _def_method="PH">
+                            <div class="listtit" id="reg-phone-select-cty">
+                                <div class="tits display_box c_b">
+                                    <p>+86</p>
+                                    <i class="icon_arrow"></i>
+                                </div>
+                                <div class="inputbg">
+                                    <input id="phoneNo" type="tel" name="phone" style="top:0" value="17853517161" placeholder="请输入手机号码">
+                                    <span class="error"></span>
+                                </div>
+
+                                <div class="inputbg">
+                                    <input id="code" type="text" name="code" style="top:10px;" placeholder="请输入验证码">
+                                    <span class="error2"></span>
+                                </div>
+                                <button id="codeBtn" class="code">点击获取</button>
+                            </div>
+                        </div>
+                        <div class="reg-btn">
+                            <a id="regBtn" href="javascript:void(0);" class="btn332 btn_reg_1">立即注册</a>
+                        </div>
+                    </div>
+                    <div class="privacy_box">
+                        <div class="msg">
+                            <label class="n_checked now select-privacy">
+                            注册帐号即表示您同意并愿意遵守小米 <a href="javascript:void(0);" class="inspect_link agreement_link" title="用户协议" target="_blank">用户协议</a>和<a href="javascript:void(0);" class="inspect_link privacy_link" title=" 隐私政策 " target="_blank"> 隐私政策 </a>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 脚部 -->
+            <div class="n-footer">
+                <div class="nf-link-area clearfix">
+                    <ul class="lang-select-list">
+                    <li><a href="javascript:void(0);" class="lang-select-li current">简体</a>|</li>
+                    <li><a href="javascript:void(0);" class="lang-select-li">繁体</a>|</li>
+                    <li><a href="javascript:void(0);" class="lang-select-li">English</a>|</li>
+                    <li><a href="javascript:void(0);" target="_blank">常见问题</a>|</li>
+                    <li><a href="javascript:void(0);" target="_blank">隐私政策</a></li>
+                    </ul>
+                </div>
+                <p class="nf-intro">小米公司版权所有-京ICP备10046444-<a class="beian-record-link" target="_blank" href="javascript:void(0);"><span>
+                    <img src="https://account.xiaomi.com/static/res/9204d06/account-static/respassport/acc-2014/img/ghs.png"></span>京公网安备11010802020134号</a>-京ICP证110507号
+                </p>
+            </div>
+        </div>
+    </div>
+    <script src="script/jquery-3.3.1.js"></script>
+    <script src="script/jquery.cookie.js"></script>
+    <script>
+        var regPhone = /^1[34578]\d{9}$/;                  //   /^1[0-9]{10}$/
+        var oPhone = document.getElementById("phoneNo");
+        var oError = document.querySelector(".error");
+        var oError2 = document.querySelector(".error2");
+        var oCodeBtn = document.getElementById("codeBtn");
+        var oCode = document.getElementById("code");
+        var oRegBtn = document.querySelector("#regBtn");
+
+        oPhone.onfocus = function(){
+            oError.innerHTML = "请输入正确的11位手机号码";
+        }
+        oPhone.onblur = function(){
+            if(oPhone.value == ""){
+                oError.innerHTML = "请输入11位手机号码";
+            }
+            if(regPhone.test(oPhone.value)){
+                oError.innerHTML = "手机号输入正确,点击进入下一步";
+                oPhone.style.color = "green";
+            }else{
+                oError.innerHTML = "手机号格式错误,请输入正确的11位数字";
+                oError.style.color = "#ff6700";
+                oPhone.style.borderColor = "#ff6700";
+            }
+        }
+        
+        function randomCode(){
+            var str = "";
+            for(var i = 0 ; i < 4; i ++){
+                var sLetter = "1234567890qwertyuioplkjhgfdsazxcvbnm"
+                var randomStr = sLetter[Math.round(Math.random() * (sLetter.length - 1))]
+                if(randomStr == undefined){
+                    randomStr = 0;
+                }
+                str += randomStr;
+                oCodeBtn.innerHTML = str;
+            }
+            // return str;
+        }
+        
+        oCodeBtn.onclick = function(){
+            randomCode();
+        }
+        oCode.onfocus = function(){
+            oError2.innerHTML = "点击按钮换一换";
+        }
+        oCode.onblur = function(){
+            if(oCode.value == oCodeBtn.innerHTML || oCode.innerHTML != "" ){
+                oError2.innerHTML = "输入正确";
+            }else{
+                oError2.innerHTML = "验证码输入错误，请重新输入";
+                oCode.value = "";
+                randomCode();
+            }
+        }
+        oRegBtn.onclick = function(){
+            if(oCode.value != "" && oPhone.value != ""){
+                $.cookie("phone",oPhone.value);
+                $.ajax({
+                    type: 'POST',
+                    url : "http://localhost:88/api/users/register",
+                    data : {username : $.cookie("phone")}
+                })
+                .then(function(res){
+                    oError2.innerHTML = res;
+                    if(res == "没有重复用户名"){
+                        location.href = "register1.html";
+                    }
+                })
+            }
+        }
+        
+    </script>
+</body>
+</html>

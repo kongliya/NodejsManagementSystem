@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>小米账号 - 登录</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <div class="h_panel">
+        <div class="h_logo">
+            <a href="index.html" target="_parent">小米网</a>
+        </div>
+    </div>
+
+    <div class="login_banner_panel" style="background-image: url(&quot;https://i8.mifile.cn/b2c-mimall-media/4d52c587e6415f82684a881db27e3b01.jpg&quot;);">
+        <!-- 底部定位的bg -->
+        <a href="javascript:void(0);" target="_parent">小米网</a>
+    </div>
+
+    <div class="wrap">
+        <div class="container">
+            <div class="layout">
+                <div class="form">
+                    <div class="mainbox">
+                        <div class="title">
+                            <a class="navtab-link active" href="javascript:void(0);">帐号登录</a>
+                            <span class="line"></span>
+                            <a class="navtab-link" href="javascript:void(0);">扫码登录</a>
+                        </div>
+                        <div class="input-box">
+                            <div class="usrbox">
+                                <input class="item_account" value="17853517161" autocomplete="off" type="text" name="user" id="username" placeholder="邮箱/手机号码/小米ID">
+                            </div>
+                            <div class="usrbox">
+                                <input class="item_account" value="123456" autocomplete="off" type="password" name="password" id="pwd" placeholder="密码">
+                            </div>
+                        </div>
+                        <div id="error"></div>
+                        <div class="login-btn">
+                            <a class="btnadpt" id="login-button">登录</a>
+                        </div>
+                        <p class="tip clearfix">
+                            <a href="javascript:void(0);" class="phone">手机短信登录/注册</a>
+                            <span class="tip2">
+                                <a href="register.html">立即注册 </a>
+                                <em>|</em>
+                                <a href="javascript:void(0);"> 忘记密码 ?</a>
+                            </span>
+                            
+                        </p>
+                        <!-- 其他方式登录 -->
+                        <div class="other">
+                            <fieldset class="oth_type_tit">
+                                <legend align="center" class="oth_type_txt">其他方式登录</legend>
+                            </fieldset>
+                            <div class="oth_type_links">
+                                <a class="icon_type btn_qq sns-login-link" data-type="qq" href="javascript:void(0);" title="QQ登录" target="_blank"><i class="btn_sns_icontype icon_default_qq"></i></a>
+                                <a class="icon_type btn_weibo sns-login-link" data-type="weibo" href="javascript:void(0);" title="微博登录" target="_blank"><i class="btn_sns_icontype icon_default_weibo"></i></a>
+                                <a class="icon_type btn_alipay sns-login-link" data-type="alipay" href="javascript:void(0);" title="支付宝登录" target="_blank"><i class="btn_sns_icontype icon_default_alipay"></i></a>
+                                <a class="icon_type btn_weixin sns-login-link" data-type="weixin" href="javascript:void(0);" title="微信登录" target="_blank"><i class="btn_sns_icontype icon_default_weixin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="n-footer">
+        <div class="nf-link-area clearfix">
+            <ul class="lang-select-list">
+            <li><a href="javascript:void(0);" class="lang-select-li current">简体</a>|</li>
+            <li><a href="javascript:void(0);" class="lang-select-li">繁体</a>|</li>
+            <li><a href="javascript:void(0);" class="lang-select-li">English</a>|</li>
+            <li><a href="javascript:void(0);" target="_blank">常见问题</a>|</li>
+            <li><a href="javascript:void(0);" target="_blank">隐私政策</a></li>
+            </ul>
+        </div>
+        <p class="nf-intro">小米公司版权所有-京ICP备10046444-<a class="beian-record-link" target="_blank" href="javascript:void(0);"><span>
+            <img src="https://account.xiaomi.com/static/res/9204d06/account-static/respassport/acc-2014/img/ghs.png"></span>京公网安备11010802020134号</a>-京ICP证110507号
+        </p>
+    </div>
+
+    <script src="script/jquery-3.3.1.js"></script>
+    <script src="script/jquery.cookie.js"></script>
+    <script>
+        var oUsr = $("#username");
+        var oPwd = $("#pwd");
+        var oBtn = $("#login-button");
+        var oError = $("#error");
+
+        oBtn.on("click",login);
+        function login(){
+            $.ajax({
+                type: 'POST',
+                url : "http://localhost:88/api/login/login",
+                data : {
+                    username : oUsr.val(),
+                    password : oPwd.val()
+                }
+            })
+            .then(function(res){
+                if(res.status == "success"){
+                    location.href = "http://localhost:88/index.html";
+                }else{
+                    alert("发生错误 错误代码" + res.statuCode);
+                }
+            },function(err){
+                console.log(err,"错误");
+            })
+        }
+    
+    </script>
+</body>
+</html>
